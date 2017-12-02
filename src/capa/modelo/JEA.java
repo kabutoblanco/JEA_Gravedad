@@ -29,7 +29,8 @@ public final class JEA extends Juego {
     
     @Override
     public void jugar(int[] coordenada) {
-        columna = coordenada[0];
+        fila = coordenada[0];
+        columna = coordenada[1];
         notificar();
     }
 

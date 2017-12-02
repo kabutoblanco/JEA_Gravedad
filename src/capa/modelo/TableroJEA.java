@@ -20,7 +20,7 @@ public final class TableroJEA extends Tablero {
     
     @Override
     public void mantener(Juego juego) {
-        int[] coordenada = {juego.columna};
+        int[] coordenada = {juego.fila, juego.columna};
         grillas = caida.ponerFicha(coordenada, juego.turno, grillas);
         Controlador.getInstancia().mostrarJugada(grillas);
     }

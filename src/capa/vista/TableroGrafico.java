@@ -6,7 +6,6 @@
 package capa.vista;
 
 import capa.controlador.Controlador;
-import capa.modelo.Ganado;
 import capa.modelo.Gravedad;
 import capa.modelo.JEA;
 import capa.modelo.Juego;
@@ -26,8 +25,12 @@ public class TableroGrafico extends JPanel implements KeyListener {
     private int tecla;
     private final int[] coordenada = {-1, -1};
 
+    public TableroGrafico() {
+        matriz = new int[0][0];
+        crear();
+    }
+
     public TableroGrafico(int juego) {
-        tecla = -1;
         if (juego == 1)
             Juego.setInstancia(new JEA());
         else if (juego == 2)
@@ -38,6 +41,7 @@ public class TableroGrafico extends JPanel implements KeyListener {
     }
     
     private void crear() {
+        tecla = -1;
         Controlador.getInstancia(this);
         addKeyListener(this);
         setFocusable(false);
@@ -53,31 +57,32 @@ public class TableroGrafico extends JPanel implements KeyListener {
                         g.setColor(Color.red);
                     else if (matriz[i][j] == 2)
                         g.setColor(Color.blue);
-                    g.fillOval(j * 60, i * 60, 60, 60);
+                    g.fillRect(j * 60, i * 60, 60, 60);
                 }
                 g.setColor(Color.black);
-                g.drawOval(j * 60, i * 60, 60, 60);
+                g.drawRect(j * 60, i * 60, 60, 60);
             }
         }
     }
     
     public void mostrarJugada(int[][] grillas) {
         matriz = grillas;
-        repaint();
+        super.repaint();
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
         int filas, columnas;
         tecla = e.getKeyChar() - 48;
-        if (Juego.getInstancia().getClass().getName().equals("capa.modelo.JEA")) {
+        if (Juego.getInstancia().getTablero().getCaida().getClass().getName().equals("capa.modelo.CaidaJEA")) {
+            System.out.println("JEA: " + coordenada[0] + " - " + coordenada[1]);
             columnas = Juego.getInstancia().getTablero().getGrillas()[0].length;
             if (tecla > -1 && tecla < columnas) {
                 if (!Juego.getInstancia().getEstado().verificar()) {
                     coordenada[0] = tecla;
                     Juego.getInstancia().jugar(coordenada);
                     if (Juego.getInstancia().chequearGanador()) {
-                        Juego.getInstancia().setEstado(new Ganado());
+                        Juego.getInstancia().terminar();
                         JOptionPane.showConfirmDialog(this, "Ganaste", "OJO", JOptionPane.CLOSED_OPTION);
                     }
                     Juego.getInstancia().getEstado().verificar();
@@ -88,8 +93,10 @@ public class TableroGrafico extends JPanel implements KeyListener {
                     JEA_Gravedad._menu.getButonJugar().setEnabled(true);
                 }
             }
+            reiniciar();
         }
-        else if (Juego.getInstancia().getClass().getName().equals("capa.modelo.Gravedad")) {
+        else if (Juego.getInstancia().getTablero().getCaida().getClass().getName().equals("capa.modelo.CaidaGravedad")) {
+            System.out.println("Gravedad: " + coordenada[0] + " - " + coordenada[1]);
             if (coordenada[0] == -1)
                 coordenada[0] = tecla;
             else {
@@ -100,7 +107,7 @@ public class TableroGrafico extends JPanel implements KeyListener {
                     if (!Juego.getInstancia().getEstado().verificar()) {
                         Juego.getInstancia().jugar(coordenada);
                         if (Juego.getInstancia().chequearGanador()) {
-                            Juego.getInstancia().setEstado(new Ganado());
+                            Juego.getInstancia().terminar();
                             JOptionPane.showConfirmDialog(this, "Ganaste", "OJO", JOptionPane.CLOSED_OPTION);
                         }
                         Juego.getInstancia().getEstado().verificar();
@@ -111,7 +118,7 @@ public class TableroGrafico extends JPanel implements KeyListener {
                         JEA_Gravedad._menu.getButonJugar().setEnabled(true);
                     }
                 }
-                coordenada[0] = -1; coordenada[1] = -1;
+                reiniciar();
             }
         }
     }
@@ -124,6 +131,14 @@ public class TableroGrafico extends JPanel implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         
+    }
+
+    public void reiniciar() {
+        coordenada[0] = -1; coordenada[1] = -1;
+    }
+
+    public int[][] getMatriz() {
+        return matriz;
     }
     
 }

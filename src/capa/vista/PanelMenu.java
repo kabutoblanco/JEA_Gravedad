@@ -6,6 +6,8 @@
 package capa.vista;
 
 import capa.controlador.Controlador;
+import capa.modelo.CaidaGravedad;
+import capa.modelo.CaidaJEA;
 import capa.modelo.Juego;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -48,9 +50,19 @@ public class PanelMenu extends javax.swing.JPanel {
 
         grupoJuego.add(radioJEA);
         radioJEA.setText("Normal");
+        radioJEA.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                radioJEAMouseClicked(evt);
+            }
+        });
 
         grupoJuego.add(radioGravedad);
         radioGravedad.setText("Gravedad");
+        radioGravedad.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                radioGravedadMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -96,6 +108,30 @@ public class PanelMenu extends javax.swing.JPanel {
             JOptionPane.showConfirmDialog(this, "Selecciona un juego", "OJO", JOptionPane.CLOSED_OPTION);
         }
     }//GEN-LAST:event_butonJugarActionPerformed
+
+    private void radioJEAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioJEAMouseClicked
+        // TODO add your handling code here:
+        JEA_Gravedad._frame.setTitle("JEA - Normal");
+        if (JEA_Gravedad._tablero.getMatriz().length != 0) {
+            JEA_Gravedad._tablero.reiniciar();
+            Juego.getInstancia().getTablero().setCaida(new CaidaJEA());
+            JEA_Gravedad._tablero.setFocusable(true);
+            radioJEA.setFocusable(false);
+            radioGravedad.setFocusable(false);
+        }
+    }//GEN-LAST:event_radioJEAMouseClicked
+
+    private void radioGravedadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioGravedadMouseClicked
+        // TODO add your handling code here:
+        JEA_Gravedad._frame.setTitle("JEA - Gravedad");
+        if (JEA_Gravedad._tablero.getMatriz().length != 0) {
+            JEA_Gravedad._tablero.reiniciar();
+            Juego.getInstancia().getTablero().setCaida(new CaidaGravedad());
+            JEA_Gravedad._tablero.setFocusable(true);
+            radioJEA.setFocusable(false);
+            radioGravedad.setFocusable(false);
+        }
+    }//GEN-LAST:event_radioGravedadMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

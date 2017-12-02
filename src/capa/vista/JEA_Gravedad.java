@@ -13,6 +13,7 @@ import javax.swing.JFrame;
  * @author daniel
  */
 public class JEA_Gravedad {
+    public static JFrame _frame = new JFrame("JEA");
     public static TableroGrafico _tablero;
     public static PanelMenu _menu;
     /**
@@ -20,15 +21,14 @@ public class JEA_Gravedad {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        _tablero = new TableroGrafico(1);
+        _tablero = new TableroGrafico();
         _menu = new PanelMenu();
-        JFrame frame = new JFrame();
-        frame.getContentPane().setLayout(new BorderLayout());
-        frame.add(_tablero, BorderLayout.CENTER);
-        frame.add(_menu, BorderLayout.SOUTH);
-        frame.setDefaultCloseOperation(3);
-        frame.setSize(430, 470);
-        frame.setVisible(true);
+        _frame.getContentPane().setLayout(new BorderLayout());
+        _frame.add(_tablero, BorderLayout.CENTER);
+        _frame.add(_menu, BorderLayout.SOUTH);
+        _frame.setDefaultCloseOperation(3);
+        _frame.setSize(430, 470);
+        _frame.setVisible(true);
     }
     
 }

@@ -19,5 +19,9 @@ public abstract class Tablero {
     }
     public abstract void setCaida(Caida caida);
     public abstract int[][] getGrillas();
+
+    public Caida getCaida() {
+        return caida;
+    }
     
 }

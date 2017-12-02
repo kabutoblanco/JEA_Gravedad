@@ -13,6 +13,7 @@ public class CaidaJEA implements Caida {
 
     @Override
     public int[][] ponerFicha(int[] coordenada, int turno, int[][] grillas) {
+        System.err.println(coordenada[0] + " - " + coordenada[1]);
         for (int i = grillas.length - 1; i > -1; i--) {
             if (grillas[i][coordenada[0]] == 0) {
                 grillas[i][coordenada[0]] = turno;
