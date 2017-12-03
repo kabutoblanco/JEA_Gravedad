@@ -9,6 +9,7 @@ import capa.controlador.Controlador;
 import capa.modelo.CaidaGravedad;
 import capa.modelo.CaidaJEA;
 import capa.modelo.Juego;
+import java.awt.Cursor;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -23,6 +24,14 @@ public class PanelMenu extends javax.swing.JPanel {
      */
     public PanelMenu() {
         initComponents();
+        crear();
+    }
+    
+    private void crear() {
+        Cursor mano = new Cursor(Cursor.HAND_CURSOR);
+        butonJugar.setCursor(mano);
+        radioJEA.setCursor(mano);
+        radioGravedad.setCursor(mano);
     }
 
     /**
@@ -35,18 +44,13 @@ public class PanelMenu extends javax.swing.JPanel {
     private void initComponents() {
 
         grupoJuego = new javax.swing.ButtonGroup();
-        butonJugar = new javax.swing.JButton();
         radioJEA = new javax.swing.JRadioButton();
         radioGravedad = new javax.swing.JRadioButton();
+        butonJugar = new javax.swing.JButton();
+        radioComplica = new javax.swing.JRadioButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Menu"));
-
-        butonJugar.setText("Jugar");
-        butonJugar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                butonJugarActionPerformed(evt);
-            }
-        });
+        setPreferredSize(new java.awt.Dimension(316, 53));
 
         grupoJuego.add(radioJEA);
         radioJEA.setText("Normal");
@@ -64,6 +68,16 @@ public class PanelMenu extends javax.swing.JPanel {
             }
         });
 
+        butonJugar.setText("Jugar");
+        butonJugar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butonJugarActionPerformed(evt);
+            }
+        });
+
+        grupoJuego.add(radioComplica);
+        radioComplica.setText("Complica");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -72,20 +86,20 @@ public class PanelMenu extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(radioJEA)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(radioGravedad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(radioGravedad)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(radioComplica)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addComponent(butonJugar)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(butonJugar)
-                    .addComponent(radioJEA)
-                    .addComponent(radioGravedad))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(radioJEA)
+                .addComponent(radioGravedad)
+                .addComponent(butonJugar)
+                .addComponent(radioComplica))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -98,8 +112,12 @@ public class PanelMenu extends javax.swing.JPanel {
                 JEA_Gravedad._tablero = new TableroGrafico(1);
                 butonJugar.setEnabled(false);
             }
-            else {
+            else if (grupoJuego.getSelection().equals(radioGravedad.getModel())) {
                 JEA_Gravedad._tablero = new TableroGrafico(2);
+                butonJugar.setEnabled(false);
+            }
+            else if (grupoJuego.getSelection().equals(radioComplica.getModel())) {
+                JEA_Gravedad._tablero = new TableroGrafico(3);
                 butonJugar.setEnabled(false);
             }
             Controlador.getInstancia().mostrarJugada(Juego.getInstancia().getTablero().getGrillas());
@@ -118,6 +136,7 @@ public class PanelMenu extends javax.swing.JPanel {
             JEA_Gravedad._tablero.setFocusable(true);
             radioJEA.setFocusable(false);
             radioGravedad.setFocusable(false);
+            radioComplica.setFocusable(false);
         }
     }//GEN-LAST:event_radioJEAMouseClicked
 
@@ -130,6 +149,7 @@ public class PanelMenu extends javax.swing.JPanel {
             JEA_Gravedad._tablero.setFocusable(true);
             radioJEA.setFocusable(false);
             radioGravedad.setFocusable(false);
+            radioComplica.setFocusable(false);
         }
     }//GEN-LAST:event_radioGravedadMouseClicked
 
@@ -137,10 +157,11 @@ public class PanelMenu extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton butonJugar;
     private javax.swing.ButtonGroup grupoJuego;
+    private javax.swing.JRadioButton radioComplica;
     private javax.swing.JRadioButton radioGravedad;
     private javax.swing.JRadioButton radioJEA;
     // End of variables declaration//GEN-END:variables
-
+    
     public JButton getButonJugar() {
         return butonJugar;
     }

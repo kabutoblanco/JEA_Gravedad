@@ -27,7 +27,7 @@ public class JEA_Gravedad {
         _frame.add(_tablero, BorderLayout.CENTER);
         _frame.add(_menu, BorderLayout.SOUTH);
         _frame.setDefaultCloseOperation(3);
-        _frame.setSize(430, 470);
+        _frame.setSize(430, 510);
         _frame.setVisible(true);
     }
     

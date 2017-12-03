@@ -24,15 +24,5 @@ public final class TableroGravedad extends Tablero {
         grillas = caida.ponerFicha(coordenada, juego.turno, grillas);
         Controlador.getInstancia().mostrarJugada(grillas);
     }
-
-    @Override
-    public void setCaida(Caida caida) {
-        super.caida = caida;
-    }
-
-    @Override
-    public int[][] getGrillas() {
-        return grillas;
-    }
     
 }

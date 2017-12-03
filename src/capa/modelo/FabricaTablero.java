@@ -11,10 +11,16 @@ package capa.modelo;
  */
 public class FabricaTablero {
     public Tablero crearTablero(int i) {
-        if (i == 1)
-            return new TableroJEA();
-        else if (i == 2)
-            return new TableroGravedad();
+        switch (i) {
+            case 1:
+                return new TableroJEA();
+            case 2:
+                return new TableroGravedad();
+            case 3:
+                return new TableroComplica();
+            default:
+                break;
+        }
         return null;
     }
 }

@@ -6,6 +6,7 @@
 package capa.vista;
 
 import capa.controlador.Controlador;
+import capa.modelo.Complica;
 import capa.modelo.Gravedad;
 import capa.modelo.JEA;
 import capa.modelo.Juego;
@@ -31,10 +32,19 @@ public class TableroGrafico extends JPanel implements KeyListener {
     }
 
     public TableroGrafico(int juego) {
-        if (juego == 1)
-            Juego.setInstancia(new JEA());
-        else if (juego == 2)
-            Juego.setInstancia(new Gravedad());
+        switch (juego) {
+            case 1:
+                Juego.setInstancia(new JEA());
+                break;
+            case 2:
+                Juego.setInstancia(new Gravedad());
+                break;
+            case 3:
+                Juego.setInstancia(new Complica());
+                break;
+            default:
+                break;
+        }
         matriz = Juego.getInstancia().getTablero().getGrillas();
         Juego.getInstancia().iniciar();
         crear();
@@ -74,41 +84,18 @@ public class TableroGrafico extends JPanel implements KeyListener {
     public void keyTyped(KeyEvent e) {
         int filas, columnas;
         tecla = e.getKeyChar() - 48;
-        if (Juego.getInstancia().getTablero().getCaida().getClass().getName().equals("capa.modelo.CaidaJEA")) {
-            System.out.println("JEA: " + coordenada[0] + " - " + coordenada[1]);
-            columnas = Juego.getInstancia().getTablero().getGrillas()[0].length;
-            if (tecla > -1 && tecla < columnas) {
-                if (!Juego.getInstancia().getEstado().verificar()) {
-                    coordenada[0] = tecla;
-                    Juego.getInstancia().jugar(coordenada);
-                    if (Juego.getInstancia().chequearGanador()) {
-                        Juego.getInstancia().terminar();
-                        JOptionPane.showConfirmDialog(this, "Ganaste", "OJO", JOptionPane.CLOSED_OPTION);
-                    }
-                    Juego.getInstancia().getEstado().verificar();
-                    Juego.getInstancia().darTurno();
-                }
-                else {
-                    JOptionPane.showConfirmDialog(this, "Ya perdiste", "OJO", JOptionPane.CLOSED_OPTION);
-                    JEA_Gravedad._menu.getButonJugar().setEnabled(true);
-                }
-            }
-            reiniciar();
-        }
-        else if (Juego.getInstancia().getTablero().getCaida().getClass().getName().equals("capa.modelo.CaidaGravedad")) {
-            System.out.println("Gravedad: " + coordenada[0] + " - " + coordenada[1]);
-            if (coordenada[0] == -1)
-                coordenada[0] = tecla;
-            else {
-                filas = Juego.getInstancia().getTablero().getGrillas().length;
+        switch (Juego.getInstancia().getTablero().getCaida().getClass().getName()) {
+            case "capa.modelo.CaidaJEA":
+                System.out.println("JEA: " + coordenada[0] + " - " + coordenada[1]);
                 columnas = Juego.getInstancia().getTablero().getGrillas()[0].length;
-                coordenada[1] = tecla;
-                if (coordenada[0] > -1 && coordenada[0] < filas && coordenada[1] > -1 && coordenada[1] < columnas) {
+                if (tecla > -1 && tecla < columnas) {
                     if (!Juego.getInstancia().getEstado().verificar()) {
+                        coordenada[0] = tecla;
                         Juego.getInstancia().jugar(coordenada);
                         if (Juego.getInstancia().chequearGanador()) {
                             Juego.getInstancia().terminar();
                             JOptionPane.showConfirmDialog(this, "Ganaste", "OJO", JOptionPane.CLOSED_OPTION);
+                            JEA_Gravedad._menu.getButonJugar().setEnabled(true);
                         }
                         Juego.getInstancia().getEstado().verificar();
                         Juego.getInstancia().darTurno();
@@ -117,9 +104,57 @@ public class TableroGrafico extends JPanel implements KeyListener {
                         JOptionPane.showConfirmDialog(this, "Ya perdiste", "OJO", JOptionPane.CLOSED_OPTION);
                         JEA_Gravedad._menu.getButonJugar().setEnabled(true);
                     }
-                }
-                reiniciar();
-            }
+                }   reiniciar(); 
+                break;
+            case "capa.modelo.CaidaGravedad":
+                System.out.println("Gravedad: " + coordenada[0] + " - " + coordenada[1]);
+                if (coordenada[0] == -1)
+                    coordenada[0] = tecla;
+                else {
+                    filas = Juego.getInstancia().getTablero().getGrillas().length;
+                    columnas = Juego.getInstancia().getTablero().getGrillas()[0].length;
+                    coordenada[1] = tecla;
+                    if (coordenada[0] > -1 && coordenada[0] < filas && coordenada[1] > -1 && coordenada[1] < columnas) {
+                        if (!Juego.getInstancia().getEstado().verificar()) {
+                            Juego.getInstancia().jugar(coordenada);
+                            if (Juego.getInstancia().chequearGanador()) {
+                                Juego.getInstancia().terminar();
+                                JOptionPane.showConfirmDialog(this, "Ganaste", "OJO", JOptionPane.CLOSED_OPTION);
+                                JEA_Gravedad._menu.getButonJugar().setEnabled(true);
+                            }
+                            Juego.getInstancia().getEstado().verificar();
+                            Juego.getInstancia().darTurno();
+                        }
+                        else {
+                            JOptionPane.showConfirmDialog(this, "Ya perdiste", "OJO", JOptionPane.CLOSED_OPTION);
+                            JEA_Gravedad._menu.getButonJugar().setEnabled(true);
+                        }
+                    }
+                    reiniciar();
+                }   break;
+            case "capa.modelo.CaidaComplica":
+                System.out.println("JEA: " + coordenada[0] + " - " + coordenada[1]);
+                columnas = Juego.getInstancia().getTablero().getGrillas()[0].length;
+                if (tecla > -1 && tecla < columnas) {
+                    if (!Juego.getInstancia().getEstado().verificar()) {
+                        coordenada[0] = tecla;
+                        Juego.getInstancia().jugar(coordenada);
+                        if (Juego.getInstancia().chequearGanador()) {
+                            Juego.getInstancia().terminar();
+                            JOptionPane.showConfirmDialog(this, "Ganaste", "OJO", JOptionPane.CLOSED_OPTION);
+                            JEA_Gravedad._menu.getButonJugar().setEnabled(true);
+                        }
+                        Juego.getInstancia().getEstado().verificar();
+                        Juego.getInstancia().darTurno();
+                    }
+                    else {
+                        JOptionPane.showConfirmDialog(this, "Ya perdiste", "OJO", JOptionPane.CLOSED_OPTION);
+                        JEA_Gravedad._menu.getButonJugar().setEnabled(true);
+                    }
+                }   reiniciar(); 
+                break;
+            default:
+                break;
         }
     }
 

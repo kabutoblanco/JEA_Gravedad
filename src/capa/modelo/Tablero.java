@@ -14,14 +14,21 @@ public abstract class Tablero {
     protected int[][] grillas = null;
     protected Caida caida = null;
     public abstract void mantener(Juego juego);
+    
+    public int[][] getGrillas() {
+        return grillas;
+    }
+    
     public void setGrillas(int[][] grillas) {
         this.grillas = grillas;
     }
-    public abstract void setCaida(Caida caida);
-    public abstract int[][] getGrillas();
 
     public Caida getCaida() {
         return caida;
+    }
+    
+    public void setCaida(Caida caida) {
+        this.caida = caida;
     }
     
 }

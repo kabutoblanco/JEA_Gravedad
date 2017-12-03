@@ -11,13 +11,13 @@ import capa.controlador.Controlador;
  *
  * @author daniel
  */
-public final class TableroJEA extends Tablero {
+public final class TableroComplica extends Tablero {
 
-    public TableroJEA() {
-        setGrillas(new int[6][7]);
-        setCaida(new CaidaJEA());
+    public TableroComplica() {
+        setGrillas(new int[7][4]);
+        setCaida(new CaidaComplica());
     }
-    
+
     @Override
     public void mantener(Juego juego) {
         int[] coordenada = {juego.fila, juego.columna};
