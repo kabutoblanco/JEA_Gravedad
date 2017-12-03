@@ -6,6 +6,7 @@
 package capa.vista;
 
 import capa.controlador.Controlador;
+import capa.modelo.CaidaComplica;
 import capa.modelo.CaidaGravedad;
 import capa.modelo.CaidaJEA;
 import capa.modelo.Juego;
@@ -77,6 +78,11 @@ public class PanelMenu extends javax.swing.JPanel {
 
         grupoJuego.add(radioComplica);
         radioComplica.setText("Complica");
+        radioComplica.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                radioComplicaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -89,7 +95,7 @@ public class PanelMenu extends javax.swing.JPanel {
                 .addComponent(radioGravedad)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(radioComplica)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(butonJugar)
                 .addContainerGap())
         );
@@ -152,6 +158,19 @@ public class PanelMenu extends javax.swing.JPanel {
             radioComplica.setFocusable(false);
         }
     }//GEN-LAST:event_radioGravedadMouseClicked
+
+    private void radioComplicaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioComplicaMouseClicked
+        // TODO add your handling code here:
+        JEA_Gravedad._frame.setTitle("JEA - Complica");
+        if (JEA_Gravedad._tablero.getMatriz().length != 0) {
+            JEA_Gravedad._tablero.reiniciar();
+            Juego.getInstancia().getTablero().setCaida(new CaidaComplica());
+            JEA_Gravedad._tablero.setFocusable(true);
+            radioJEA.setFocusable(false);
+            radioGravedad.setFocusable(false);
+            radioComplica.setFocusable(false);
+        }
+    }//GEN-LAST:event_radioComplicaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
